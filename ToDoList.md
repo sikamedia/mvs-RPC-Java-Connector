@@ -1,0 +1,1 @@
+1. prestudy https://github.com/nitinsurana/Litecoin-Bitcoin-RPC-Java-Connector
