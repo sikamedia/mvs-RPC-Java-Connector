@@ -1,8 +1,8 @@
-package com.nitinsurana.bitcoinlitecoin.rpcconnector.events;
+package com.viewfin.etp.rpcconnector.events;
 
-import com.nitinsurana.bitcoinlitecoin.rpcconnector.CryptoCurrencyRPC;
-import com.nitinsurana.bitcoinlitecoin.rpcconnector.exception.CryptoCurrencyRpcException;
-import com.nitinsurana.bitcoinlitecoin.rpcconnector.pojo.Transaction;
+import com.viewfin.etp.rpcconnector.CryptoCurrencyRPC;
+import com.viewfin.etp.rpcconnector.exception.CryptoCurrencyRpcException;
+import com.viewfin.etp.rpcconnector.pojo.Transaction;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;

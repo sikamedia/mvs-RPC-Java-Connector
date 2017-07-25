@@ -1,13 +1,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.nitinsurana</groupId>
-    <artifactId>Litecoin-Bitcoin-RPC-Java-Connector</artifactId>
-    <version>2.0.0</version>
+    <groupId>com.viewfin</groupId>
+    <artifactId>MVS-RPC-Java-Connector</artifactId>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
 
-    <name>Litecoin-Bitcoin-RPC-Java-Connector</name>
-    <description>Java Wrapper around the JSON-RPC provided by Bitcoin/Litecoin</description>
+    <name>MVS-RPC-Java-Connector</name>
+    <description>Java Wrapper around the JSON-RPC provided by Metaverse ETP</description>
     <url>http://nitinsurana.com</url>
 
 	
@@ -25,23 +25,6 @@
         </license>
     </licenses>
 
-    <scm>
-        <!--scm:git:git@github.com:{organization}/{project}.git-->
-        <url>https://github.com/coding-idiot/Litecoin-Bitcoin-RPC-Java-Connector</url>
-        <!--<connection>scm:git:git://github.com/coding-idiot/Litecoin-Bitcoin-RPC-Java-Connector.git</connection>-->
-        <developerConnection>scm:git:git@github.com:coding-idiot/Litecoin-Bitcoin-RPC-Java-Connector.git</developerConnection>
-        <connection>scm:git:git@github.com:coding-idiot/Litecoin-Bitcoin-RPC-Java-Connector.git</connection>
-    </scm>
-    
-    <developers>
-        <developer>
-            <email>nitin.cool4urchat@gmail.com</email>
-            <name>Nitin Surana</name>
-            <url>https://nitinsurana.com</url>
-            <id>coding_idiot</id>
-        </developer>
-    </developers>
-  
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -60,7 +43,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>1.6</version>
+                <version>2.2</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -75,8 +58,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.0.2</version>
                 <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -103,7 +86,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>com.nitinsurana.bitcoinlitecoin.rpcconnector.CryptoCurrencyRPC</mainClass>
+                            <mainClass>com.viewfin.etp.rpcconnector.CryptoCurrencyRPC</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -111,6 +94,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.7</version>
                 <executions>
                     <execution>
                         <goals>

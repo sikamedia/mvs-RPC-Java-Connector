@@ -1,4 +1,4 @@
-package com.nitinsurana.bitcoinlitecoin.rpcconnector.exception;
+package com.viewfin.etp.rpcconnector.exception;
 
 import com.google.gson.JsonObject;
 

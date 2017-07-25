@@ -1,4 +1,4 @@
-package com.nitinsurana.bitcoinlitecoin.rpcconnector.events;
+package com.viewfin.etp.rpcconnector.events;
 
 import org.apache.log4j.Logger;
 

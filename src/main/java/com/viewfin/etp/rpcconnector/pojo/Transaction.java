@@ -1,4 +1,4 @@
-package com.nitinsurana.bitcoinlitecoin.rpcconnector.pojo;
+package com.viewfin.etp.rpcconnector.pojo;
 
 import com.google.gson.annotations.SerializedName;
 

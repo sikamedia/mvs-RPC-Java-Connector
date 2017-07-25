@@ -1,4 +1,4 @@
-package com.nitinsurana.bitcoinlitecoin.rpcconnector.exception;
+package com.viewfin.etp.rpcconnector.exception;
 
 /**
  * Created by d.romantsov on 26.05.2015.
