@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.viewfin.etp.rpcconnector.exception;
+package com.viewfin.metaverse.rpcconnector.exception;
 
 /**
  *

@@ -1,4 +1,4 @@
-package com.viewfin.etp.rpcconnector.exception;
+package com.viewfin.metaverse.rpcconnector.exception;
 
 import com.google.gson.JsonObject;
 

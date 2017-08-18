@@ -1,4 +1,4 @@
-package com.viewfin.etp.rpcconnector.exception;
+package com.viewfin.metaverse.rpcconnector.exception;
 
 /**
  * Created by d.romantsov on 26.05.2015.

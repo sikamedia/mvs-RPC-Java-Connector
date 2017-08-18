@@ -3,7 +3,7 @@
   <parent>
     <artifactId>oss-parent</artifactId>
     <groupId>org.sonatype.oss</groupId>
-    <version>7</version>
+    <version>9</version>
     <relativePath>../pom.xml/pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
@@ -12,7 +12,7 @@
   <name>MVS-RPC-Java-Connector</name>
   <version>1.0.0</version>
   <description>Java Wrapper around the JSON-RPC provided by Metaverse ETP</description>
-  <url>http://nitinsurana.com</url>
+  <url>https://github.com/mvs-org/</url>
   <licenses>
     <license>
       <name>MIT License</name>
@@ -25,14 +25,14 @@
       <plugins>
         <plugin>
           <artifactId>maven-jar-plugin</artifactId>
-          <version>2.6</version>
+          <version>3.0.2</version>
         </plugin>
       </plugins>
     </pluginManagement>
     <plugins>
       <plugin>
         <artifactId>maven-shade-plugin</artifactId>
-        <version>2.2</version>
+        <version>3.0.0</version>
         <executions>
           <execution>
             <phase>package</phase>
@@ -44,7 +44,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>2.0.2</version>
+        <version>3.6.2</version>
         <configuration>
           <source>1.8</source>
           <target>1.8</target>
@@ -52,7 +52,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-dependency-plugin</artifactId>
-        <version>2.10</version>
+        <version>3.0.1</version>
         <executions>
           <execution>
             <phase>install</phase>
@@ -67,7 +67,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-jar-plugin</artifactId>
-        <version>2.6</version>
+        <version>3.0.1</version>
         <configuration>
           <archive>
             <manifest>
@@ -80,7 +80,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-javadoc-plugin</artifactId>
-        <version>2.7</version>
+        <version>3.0.0-M1</version>
         <executions>
           <execution>
             <goals>
@@ -94,7 +94,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-source-plugin</artifactId>
-        <version>2.4</version>
+        <version>3.0.1</version>
         <executions>
           <execution>
             <goals>

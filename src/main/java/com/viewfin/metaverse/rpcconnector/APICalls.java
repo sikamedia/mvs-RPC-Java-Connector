@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.viewfin.etp.rpcconnector;
+package com.viewfin.metaverse.rpcconnector;
 
 /**
  *
@@ -37,7 +37,8 @@ public enum APICalls {
     CREATE_RAW_TRANSACTION("createrawtransaction"),
     SIGN_RAW_TRANSACTION("signrawtransaction"),
     VALIDATE_ADDRESS("validateaddress"),
-    ENCRYPT_WALLET("encryptwallet");
+    ENCRYPT_WALLET("encryptwallet"),
+    LIST_ADDRESSES("listaddresses");
 
     private String value;
 

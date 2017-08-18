@@ -1,0 +1,6 @@
+metaverse:
+  host: 127.0.0.1
+  username: xxxxxx
+  password: xxxxxx
+  port: 8820
+  protocol: http

@@ -1,4 +1,4 @@
-package com.viewfin.etp.rpcconnector.events;
+package com.viewfin.metaverse.rpcconnector.events;
 
 import java.io.IOException;
 import java.util.Observable;

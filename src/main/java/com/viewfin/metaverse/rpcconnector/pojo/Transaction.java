@@ -1,4 +1,4 @@
-package com.viewfin.etp.rpcconnector.pojo;
+package com.viewfin.metaverse.rpcconnector.pojo;
 
 import com.google.gson.annotations.SerializedName;
 

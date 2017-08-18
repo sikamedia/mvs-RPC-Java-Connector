@@ -1,15 +1,15 @@
-package com.viewfin.etp.rpcconnector;
+package com.viewfin.metaverse.rpcconnector;
 
 import com.gargoylesoftware.htmlunit.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.viewfin.etp.rpcconnector.exception.AuthenticationException;
-import com.viewfin.etp.rpcconnector.exception.CryptoCurrencyRpcException;
-import com.viewfin.etp.rpcconnector.exception.CryptoCurrencyRpcExceptionHandler;
-import com.viewfin.etp.rpcconnector.exception.CallApiCryptoCurrencyRpcException;
-import com.viewfin.etp.rpcconnector.pojo.Transaction;
+import com.viewfin.metaverse.rpcconnector.exception.AuthenticationException;
+import com.viewfin.metaverse.rpcconnector.exception.CryptoCurrencyRpcException;
+import com.viewfin.metaverse.rpcconnector.exception.CryptoCurrencyRpcExceptionHandler;
+import com.viewfin.metaverse.rpcconnector.exception.CallApiCryptoCurrencyRpcException;
+import com.viewfin.metaverse.rpcconnector.pojo.Transaction;
 import org.apache.log4j.Logger;
 
 import java.math.BigDecimal;
@@ -25,6 +25,10 @@ public class CryptoCurrencyRPC {
     private String baseUrl;
     private CryptoCurrencyRpcExceptionHandler cryptoCurrencyRpcExceptionHandler = new CryptoCurrencyRpcExceptionHandler();
     private Gson gson = new Gson();
+    private String rpcUser;
+    private String httpProtocol;
+    private String rpcHost;
+    private String rpcPort;
 
     public CryptoCurrencyRPC(String rpcUser, String rpcPassword, String rpcHost, String rpcPort) throws AuthenticationException {
         client = new WebClient(BrowserVersion.CHROME);
@@ -452,7 +456,7 @@ public class CryptoCurrencyRPC {
         return jsonObj.get("result").getAsString();
     }
 
-    private JsonObject callAPIMethod(APICalls callMethod, Object... params) throws CallApiCryptoCurrencyRpcException {
+    public JsonObject callAPIMethod(APICalls callMethod, Object... params) throws CallApiCryptoCurrencyRpcException {
         try {
             JsonObject jsonObj = null;
             WebRequest req = new WebRequest(new URL(baseUrl));
@@ -478,5 +482,50 @@ public class CryptoCurrencyRPC {
         } catch (Exception e) {
             throw new CallApiCryptoCurrencyRpcException(e.getMessage());
         }
+    }
+
+
+    public void setMVSRPCUrl(String http, String rpcHost, String rpcPort) {
+        this.baseUrl = (new StringBuilder()).append(http).append("://").append(rpcHost).append(':').append(rpcPort).append("/rpc").toString();
+    }
+
+    public String getPathToBaseUrl(){
+        return this.baseUrl;
+    }
+
+    public void setBaseUrl(String url) {
+        this.baseUrl = url;
+    }
+
+    public String getRpcUser() {
+        return rpcUser;
+    }
+
+    public void setRpcUser(String rpcUser) {
+        this.rpcUser = rpcUser;
+    }
+
+    public String getHttpProtocol() {
+        return httpProtocol;
+    }
+
+    public void setHttpProtocol(String httpProtocol) {
+        this.httpProtocol = httpProtocol;
+    }
+
+    public String getRpcHost() {
+        return rpcHost;
+    }
+
+    public void setRpcHost(String rpcHost) {
+        this.rpcHost = rpcHost;
+    }
+
+    public String getRpcPort() {
+        return rpcPort;
+    }
+
+    public void setRpcPort(String rpcPort) {
+        this.rpcPort = rpcPort;
     }
 }
