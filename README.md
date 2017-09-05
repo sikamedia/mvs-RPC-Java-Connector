@@ -1,5 +1,5 @@
 # mvs-RPC-Java-Connector
-Metaverse ETP RPC java connector
+Metaverse RPC java connector
 =======
 Introduction
 ============
