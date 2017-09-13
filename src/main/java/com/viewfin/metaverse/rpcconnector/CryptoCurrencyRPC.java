@@ -484,7 +484,6 @@ public class CryptoCurrencyRPC {
         }
     }
 
-
     public void setMVSRPCUrl(String http, String rpcHost, String rpcPort) {
         this.baseUrl = (new StringBuilder()).append(http).append("://").append(rpcHost).append(':').append(rpcPort).append("/rpc").toString();
     }

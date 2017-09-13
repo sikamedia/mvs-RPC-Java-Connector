@@ -120,7 +120,12 @@
     </dependency>
   </dependencies>
   <properties>
+    <maven.compiler.compilerVersion>1.8</maven.compiler.compilerVersion>
+    <armeria.version>0.53.0</armeria.version>
+    <maven.compiler.source>1.8</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <AsyncHttpClient.version>2.0.35</AsyncHttpClient.version>
   </properties>
 </project>
 

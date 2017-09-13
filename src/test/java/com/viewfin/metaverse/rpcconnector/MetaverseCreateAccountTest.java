@@ -35,7 +35,7 @@ public class MetaverseCreateAccountTest {
     @Test
     public void testGetWalletInfo() {
 
-        System.out.println(mvsCryptoCurrencyRPC.getPathToBaseUrl());
+        LOG.info(mvsCryptoCurrencyRPC.getPathToBaseUrl());
         double balance = mvsCryptoCurrencyRPC.getBalance().doubleValue();
 
         LOG.info(balance);
