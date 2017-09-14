@@ -11,11 +11,13 @@ import com.viewfin.metaverse.rpcconnector.exception.CryptoCurrencyRpcExceptionHa
 import com.viewfin.metaverse.rpcconnector.exception.CallApiCryptoCurrencyRpcException;
 import com.viewfin.metaverse.rpcconnector.pojo.Transaction;
 import org.apache.log4j.Logger;
+// import org.asynchttpclient.*;
 
 import java.math.BigDecimal;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class CryptoCurrencyRPC {
 
@@ -483,6 +485,58 @@ public class CryptoCurrencyRPC {
             throw new CallApiCryptoCurrencyRpcException(e.getMessage());
         }
     }
+
+    // Call API Method Asynchronously
+    /*
+    public JsonObject callAPIMethodAsynchronous(APICalls callMethod, Object... params) throws CallApiCryptoCurrencyRpcException {
+
+        try {
+
+            AsyncHttpClient asyncHttpClient = new DefaultAsyncHttpClient();
+            JSONRequestBody body = new JSONRequestBody();
+            body.setMethod(callMethod.toString());
+            if (params != null && params.length > 0) {
+                body.setParams(params);
+            }
+
+            Request request = asyncHttpClient.preparePost(this.getPathToBaseUrl()).
+                    setHeader("Content-Type", "application/json").
+                    setBody(new Gson().toJson(body, JSONRequestBody.class)).build();
+
+            ListenableFuture<JsonObject> f = asyncHttpClient.executeRequest(request,
+                    new AsyncCompletionHandler<JsonObject>() {
+
+                        @Override
+                        public JsonObject onCompleted(Response response) throws Exception {
+                            JsonObject jsonObj = new JsonParser().parse(response.getResponseBody()).getAsJsonObject();
+                            return jsonObj;
+                        }
+
+                        @Override
+                        public void onThrowable(Throwable t) {
+                            LOG.error(t.getMessage());
+                            throw new CallApiCryptoCurrencyRpcException(t.getMessage());
+                        }
+                    });
+
+            JsonObject jsonObject = null;
+
+            if (f != null) {
+                try {
+                    jsonObject = f.get();
+                } catch (InterruptedException ex) {
+                    throw new CallApiCryptoCurrencyRpcException(ex.getMessage());
+                } catch (ExecutionException ex) {
+                    throw new CallApiCryptoCurrencyRpcException(ex.getMessage());
+                }
+            }
+
+            asyncHttpClient.close();
+            return jsonObject;
+        } catch (Exception e) {
+            throw new CallApiCryptoCurrencyRpcException(e.getMessage());
+        }
+    } */
 
     public void setMVSRPCUrl(String http, String rpcHost, String rpcPort) {
         this.baseUrl = (new StringBuilder()).append(http).append("://").append(rpcHost).append(':').append(rpcPort).append("/rpc").toString();

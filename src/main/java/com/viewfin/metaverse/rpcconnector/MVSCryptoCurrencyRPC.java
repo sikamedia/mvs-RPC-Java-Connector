@@ -1,19 +1,19 @@
 package com.viewfin.metaverse.rpcconnector;
 
-import com.google.gson.JsonParser;
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.linecorp.armeria.client.HttpClient;
+import com.linecorp.armeria.common.*;
 import com.viewfin.metaverse.rpcconnector.exception.AuthenticationException;
 import com.viewfin.metaverse.rpcconnector.exception.CallApiCryptoCurrencyRpcException;
 import com.viewfin.metaverse.rpcconnector.exception.CryptoCurrencyRpcException;
 import com.viewfin.metaverse.rpcconnector.exception.CryptoCurrencyRpcExceptionHandler;
 import org.apache.log4j.Logger;
-import org.asynchttpclient.*;
 
 import java.math.BigDecimal;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 public class MVSCryptoCurrencyRPC extends CryptoCurrencyRPC {
 
@@ -31,78 +31,31 @@ public class MVSCryptoCurrencyRPC extends CryptoCurrencyRPC {
         this.rpcPassword = rpcPassword;
     }
 
-    /*
-    public JsonObject callAPIMethodAsynchronous(APICalls callMethod, Object... params) throws CallApiCryptoCurrencyRpcException {
-        try {
-            JsonObject jsonObj = null;
-            HttpClient httpClient = HttpClient.of(this.getBaseUrl());
-            httpClient.post()
-
-            AggregatedHttpMessage getJson = AggregatedHttpMessage.of(
-                    HttpHeaders.of(HttpMethod.POST, "").set(HttpHeaderNames.ACCEPT, "application/json")
-            );
-
-            return jsonObj;
-        } catch (Exception e) {
-            throw new CallApiCryptoCurrencyRpcException(e.getMessage());
-        }
-
-    }*/
 
     public JsonObject callAPIMethodAsynchronous(APICalls callMethod, Object... params) throws CallApiCryptoCurrencyRpcException {
-
         try {
+            JsonObject jsonObj;
+            HttpClient httpClient = HttpClient.of(this.getPathToBaseUrl());
 
-            AsyncHttpClient asyncHttpClient = new DefaultAsyncHttpClient();
             JSONRequestBody body = new JSONRequestBody();
             body.setMethod(callMethod.toString());
             if (params != null && params.length > 0) {
                 body.setParams(params);
             }
 
+            AggregatedHttpMessage getJson = AggregatedHttpMessage.of(
+                    HttpHeaders.of(HttpMethod.POST, "").set(HttpHeaderNames.ACCEPT, "application/json"),
+                    HttpData.of(new Gson().toJson(body, JSONRequestBody.class).getBytes())
+            );
 
-            LOG.info(this.getPathToBaseUrl());
+            AggregatedHttpMessage jsonResponse = httpClient.execute(getJson).aggregate().join();
 
-            Request request = asyncHttpClient.preparePost(this.getPathToBaseUrl()).
-                    setHeader("Content-Type","application/json").
-                    setBody(body.toString()).build();
+            jsonObj = new JsonParser().parse(jsonResponse.content().toStringUtf8()).getAsJsonObject();
 
-
-
-
-            ListenableFuture<JsonObject> f = asyncHttpClient.executeRequest(request,
-                    new AsyncCompletionHandler<JsonObject>() {
-
-                        @Override
-                        public JsonObject onCompleted(Response response) throws Exception {
-                            JsonObject jsonObj = new JsonParser().parse(response.getResponseBody()).getAsJsonObject();
-                            return jsonObj;
-                        }
-
-                        @Override
-                        public void onThrowable(Throwable t){
-                            // Something wrong happened.
-                        }
-                    });
-
-            JsonObject jsonObject = null;
-
-            if (f != null) {
-                try {
-                    jsonObject = f.get();
-                } catch (InterruptedException ex) {
-                    throw new CallApiCryptoCurrencyRpcException(ex.getMessage());
-                } catch (ExecutionException ex) {
-                    throw new CallApiCryptoCurrencyRpcException(ex.getMessage());
-                }
-            }
-
-            asyncHttpClient.close();
-            return jsonObject;
+            return jsonObj;
         } catch (Exception e) {
             throw new CallApiCryptoCurrencyRpcException(e.getMessage());
         }
-
     }
 
     public BigDecimal getBalance() throws CryptoCurrencyRpcException {

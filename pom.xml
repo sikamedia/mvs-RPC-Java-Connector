@@ -176,10 +176,75 @@
         </dependency>
 
         <dependency>
+            <groupId>com.linecorp.armeria</groupId>
+            <artifactId>armeria</artifactId>
+            <version>${armeria.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.linecorp.armeria</groupId>
+            <artifactId>armeria-grpc</artifactId>
+            <version>${armeria.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.linecorp.armeria</groupId>
+            <artifactId>armeria-jetty</artifactId>
+            <version>${armeria.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.linecorp.armeria</groupId>
+            <artifactId>armeria-kafka</artifactId>
+            <version>${armeria.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.linecorp.armeria</groupId>
+            <artifactId>armeria-logback</artifactId>
+            <version>${armeria.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.linecorp.armeria</groupId>
+            <artifactId>armeria-retrofit2</artifactId>
+            <version>${armeria.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.linecorp.armeria</groupId>
+            <artifactId>armeria-thrift</artifactId>
+            <version>${armeria.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.linecorp.armeria</groupId>
+            <artifactId>armeria-tomcat</artifactId>
+            <version>${armeria.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.linecorp.armeria</groupId>
+            <artifactId>armeria-zipkin</artifactId>
+            <version>${armeria.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.linecorp.armeria</groupId>
+            <artifactId>armeria-zookeeper</artifactId>
+            <version>${armeria.version}</version>
+        </dependency>
+
+        <!-- dependency>
             <groupId>org.asynchttpclient</groupId>
             <artifactId>async-http-client</artifactId>
             <version>${AsyncHttpClient.version}</version>
+        </dependency -->
+
+        <!-- Logging -->
+        <!--dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.3</version>
+            <scope>runtime</scope>
         </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>log4j-over-slf4j</artifactId>
+            <version>1.7.25</version>
+            <scope>runtime</scope>
+        </dependency -->
 
     </dependencies>
 </project>
