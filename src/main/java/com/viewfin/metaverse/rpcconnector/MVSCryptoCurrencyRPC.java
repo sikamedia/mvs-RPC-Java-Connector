@@ -1,11 +1,14 @@
 package com.viewfin.metaverse.rpcconnector;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonObject;
 import com.viewfin.metaverse.rpcconnector.exception.AuthenticationException;
 import com.viewfin.metaverse.rpcconnector.exception.CryptoCurrencyRpcException;
 import com.viewfin.metaverse.rpcconnector.exception.CryptoCurrencyRpcExceptionHandler;
+import com.viewfin.metaverse.rpcconnector.vo.mvs.HeightHeader;
 import org.apache.log4j.Logger;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +42,19 @@ public class MVSCryptoCurrencyRPC extends CryptoCurrencyRPC {
             addressList.add(address.getAsString());
         });
         return addressList;
+    }
+
+    public HeightHeader getHeightHeader(Integer height) throws CryptoCurrencyRpcException {
+        HeightHeader heightHeader = null;
+        JsonObject jsonObject = this.callAPIMethodAsynchronous(APICalls.FETCH_HEADER_MVS, "-t", height);
+        cryptoCurrencyRpcExceptionHandler.checkException(jsonObject);
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            heightHeader = mapper.readValue(jsonObject.get("result").toString(), HeightHeader.class);
+        } catch (IOException e) {
+            LOG.error(e.getMessage());
+        }
+        return heightHeader;
     }
 
 }

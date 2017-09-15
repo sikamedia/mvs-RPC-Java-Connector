@@ -2,6 +2,7 @@ package com.viewfin.metaverse.rpcconnector;
 
 import com.viewfin.metaverse.rpcconnector.exception.AuthenticationException;
 import com.viewfin.metaverse.rpcconnector.utils.ConfigFileReader;
+import com.viewfin.metaverse.rpcconnector.vo.mvs.HeightHeader;
 import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
@@ -48,5 +49,13 @@ public class MetaverseCreateAccountTest {
         addressList.forEach(address -> {
             LOG.info(address);
         });
+    }
+
+    @Test
+    public void testGetHeightHeader() {
+        Integer height = 547302;
+        HeightHeader heightHeader = mvsCryptoCurrencyRPC.getHeightHeader(height);
+        assertEquals(height, heightHeader.getNumber());
+
     }
 }

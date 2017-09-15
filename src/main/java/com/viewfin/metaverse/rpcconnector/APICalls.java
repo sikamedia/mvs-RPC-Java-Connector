@@ -38,6 +38,7 @@ public enum APICalls {
     SIGN_RAW_TRANSACTION("signrawtransaction"),
     VALIDATE_ADDRESS("validateaddress"),
     ENCRYPT_WALLET("encryptwallet"),
+    FETCH_HEADER_MVS("fetch-header"),
     LIST_ADDRESSES("listaddresses");
 
     private String value;
