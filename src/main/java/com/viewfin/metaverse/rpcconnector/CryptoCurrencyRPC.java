@@ -5,19 +5,24 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.linecorp.armeria.client.HttpClient;
+import com.linecorp.armeria.common.AggregatedHttpMessage;
+import com.linecorp.armeria.common.HttpData;
+import com.linecorp.armeria.common.HttpHeaderNames;
+import com.linecorp.armeria.common.HttpHeaders;
 import com.viewfin.metaverse.rpcconnector.exception.AuthenticationException;
+import com.viewfin.metaverse.rpcconnector.exception.CallApiCryptoCurrencyRpcException;
 import com.viewfin.metaverse.rpcconnector.exception.CryptoCurrencyRpcException;
 import com.viewfin.metaverse.rpcconnector.exception.CryptoCurrencyRpcExceptionHandler;
-import com.viewfin.metaverse.rpcconnector.exception.CallApiCryptoCurrencyRpcException;
 import com.viewfin.metaverse.rpcconnector.pojo.Transaction;
 import org.apache.log4j.Logger;
-// import org.asynchttpclient.*;
 
 import java.math.BigDecimal;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
+
+// import org.asynchttpclient.*;
 
 public class CryptoCurrencyRPC {
 
@@ -319,7 +324,6 @@ public class CryptoCurrencyRPC {
      *
      * @param address
      * @param account
-     *
      * @throws CryptoCurrencyRpcException
      */
     public void setAccount(String address, String account) throws CryptoCurrencyRpcException {
@@ -373,7 +377,7 @@ public class CryptoCurrencyRPC {
     public JsonArray listUnspent(int minconf, String[] address) throws CryptoCurrencyRpcException {
         JsonObject jsonObj = callAPIMethod(APICalls.LIST_UNSPENT, minconf, address);
 
-                cryptoCurrencyRpcExceptionHandler.checkException(jsonObj);
+        cryptoCurrencyRpcExceptionHandler.checkException(jsonObj);
         return jsonObj.get("result").getAsJsonArray();
     }
 
@@ -381,7 +385,7 @@ public class CryptoCurrencyRPC {
     /**
      * Returns all unspent outputs with at least [minconf] and at most 9999999
      * confirmations.
-     * 
+     *
      * @param minconf
      * @return
      * @throws CryptoCurrencyRpcException
@@ -415,9 +419,9 @@ public class CryptoCurrencyRPC {
      * outputs [Out] and encodes it as hex format.
      *
      * @param prevOut is an array of JsonObjects, each with the properties
-     * "txid" and "vout".
-     * @param out is an JsonObject with the receiving addresses as properties
-     * and the receiving amount as value of each property(=address)
+     *                "txid" and "vout".
+     * @param out     is an JsonObject with the receiving addresses as properties
+     *                and the receiving amount as value of each property(=address)
      * @return
      * @throws CryptoCurrencyRpcException
      */
@@ -437,7 +441,7 @@ public class CryptoCurrencyRPC {
      * @throws CryptoCurrencyRpcException
      */
     public Transaction signRawTransaction(String hexString) throws CryptoCurrencyRpcException {
-        JsonObject jsonObj = callAPIMethod(APICalls.SIGN_RAW_TRANSACTION,hexString);
+        JsonObject jsonObj = callAPIMethod(APICalls.SIGN_RAW_TRANSACTION, hexString);
         cryptoCurrencyRpcExceptionHandler.checkException(jsonObj);
 
         return gson.fromJson(jsonObj.get("result").getAsJsonObject(), Transaction.class);
@@ -452,7 +456,7 @@ public class CryptoCurrencyRPC {
      * @throws CryptoCurrencyRpcException
      */
     public String sendRawTransaction(String hexString) throws CryptoCurrencyRpcException {
-        JsonObject jsonObj = callAPIMethod(APICalls.SEND_RAW_TRANSACTION,hexString);
+        JsonObject jsonObj = callAPIMethod(APICalls.SEND_RAW_TRANSACTION, hexString);
         cryptoCurrencyRpcExceptionHandler.checkException(jsonObj);
 
         return jsonObj.get("result").getAsString();
@@ -475,7 +479,7 @@ public class CryptoCurrencyRPC {
 
             StringBuffer buffer = new StringBuffer("");
             for (Object item : params) {
-                    buffer.append(item.toString() + " | ");
+                buffer.append(item.toString() + " | ");
             }
             LOG.info("Bitcoin RPC Request: Method: " + callMethod + " Params: " + buffer.toString() +
                     "\nBitcoin RPC Response : " + jsonObj);
@@ -486,63 +490,37 @@ public class CryptoCurrencyRPC {
         }
     }
 
-    // Call API Method Asynchronously
-    /*
     public JsonObject callAPIMethodAsynchronous(APICalls callMethod, Object... params) throws CallApiCryptoCurrencyRpcException {
-
         try {
+            JsonObject jsonObj;
+            HttpClient httpClient = HttpClient.of(this.getPathToBaseUrl());
 
-            AsyncHttpClient asyncHttpClient = new DefaultAsyncHttpClient();
             JSONRequestBody body = new JSONRequestBody();
             body.setMethod(callMethod.toString());
             if (params != null && params.length > 0) {
                 body.setParams(params);
             }
 
-            Request request = asyncHttpClient.preparePost(this.getPathToBaseUrl()).
-                    setHeader("Content-Type", "application/json").
-                    setBody(new Gson().toJson(body, JSONRequestBody.class)).build();
+            AggregatedHttpMessage getJson = AggregatedHttpMessage.of(
+                    HttpHeaders.of(com.linecorp.armeria.common.HttpMethod.POST, "").set(HttpHeaderNames.ACCEPT, "application/json"),
+                    HttpData.of(new Gson().toJson(body, JSONRequestBody.class).getBytes())
+            );
 
-            ListenableFuture<JsonObject> f = asyncHttpClient.executeRequest(request,
-                    new AsyncCompletionHandler<JsonObject>() {
+            AggregatedHttpMessage jsonResponse = httpClient.execute(getJson).aggregate().join();
 
-                        @Override
-                        public JsonObject onCompleted(Response response) throws Exception {
-                            JsonObject jsonObj = new JsonParser().parse(response.getResponseBody()).getAsJsonObject();
-                            return jsonObj;
-                        }
+            jsonObj = new JsonParser().parse(jsonResponse.content().toStringUtf8()).getAsJsonObject();
 
-                        @Override
-                        public void onThrowable(Throwable t) {
-                            LOG.error(t.getMessage());
-                            throw new CallApiCryptoCurrencyRpcException(t.getMessage());
-                        }
-                    });
-
-            JsonObject jsonObject = null;
-
-            if (f != null) {
-                try {
-                    jsonObject = f.get();
-                } catch (InterruptedException ex) {
-                    throw new CallApiCryptoCurrencyRpcException(ex.getMessage());
-                } catch (ExecutionException ex) {
-                    throw new CallApiCryptoCurrencyRpcException(ex.getMessage());
-                }
-            }
-
-            asyncHttpClient.close();
-            return jsonObject;
+            return jsonObj;
         } catch (Exception e) {
             throw new CallApiCryptoCurrencyRpcException(e.getMessage());
         }
-    } */
+    }
 
     public void setMVSRPCUrl(String http, String rpcHost, String rpcPort) {
         this.baseUrl = (new StringBuilder()).append(http).append("://").append(rpcHost).append(':').append(rpcPort).append("/rpc").toString();
     }
 
-    public String getPathToBaseUrl(){
+    public String getPathToBaseUrl() {
         return this.baseUrl;
     }
 

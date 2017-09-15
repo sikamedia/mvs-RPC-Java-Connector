@@ -16,7 +16,6 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <armeria.version>0.53.0</armeria.version>
-        <AsyncHttpClient.version>2.0.35</AsyncHttpClient.version>
     </properties>
 
     <parent>
@@ -225,12 +224,6 @@
             <artifactId>armeria-zookeeper</artifactId>
             <version>${armeria.version}</version>
         </dependency>
-
-        <!-- dependency>
-            <groupId>org.asynchttpclient</groupId>
-            <artifactId>async-http-client</artifactId>
-            <version>${AsyncHttpClient.version}</version>
-        </dependency -->
 
         <!-- Logging -->
         <!--dependency>
