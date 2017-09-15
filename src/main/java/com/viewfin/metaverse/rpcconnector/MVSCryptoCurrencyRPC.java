@@ -1,7 +1,12 @@
 package com.viewfin.metaverse.rpcconnector;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.linecorp.armeria.client.HttpClient;
+import com.linecorp.armeria.common.*;
 import com.viewfin.metaverse.rpcconnector.exception.AuthenticationException;
+import com.viewfin.metaverse.rpcconnector.exception.CallApiCryptoCurrencyRpcException;
 import com.viewfin.metaverse.rpcconnector.exception.CryptoCurrencyRpcException;
 import com.viewfin.metaverse.rpcconnector.exception.CryptoCurrencyRpcExceptionHandler;
 import org.apache.log4j.Logger;
@@ -26,23 +31,32 @@ public class MVSCryptoCurrencyRPC extends CryptoCurrencyRPC {
         this.rpcPassword = rpcPassword;
     }
 
-    /*
+
     public JsonObject callAPIMethodAsynchronous(APICalls callMethod, Object... params) throws CallApiCryptoCurrencyRpcException {
         try {
-            JsonObject jsonObj = null;
-            HttpClient httpClient = HttpClient.of(this.getBaseUrl());
-            httpClient.post()
+            JsonObject jsonObj;
+            HttpClient httpClient = HttpClient.of(this.getPathToBaseUrl());
+
+            JSONRequestBody body = new JSONRequestBody();
+            body.setMethod(callMethod.toString());
+            if (params != null && params.length > 0) {
+                body.setParams(params);
+            }
 
             AggregatedHttpMessage getJson = AggregatedHttpMessage.of(
-                    HttpHeaders.of(HttpMethod.POST, "").set(HttpHeaderNames.ACCEPT, "application/json")
+                    HttpHeaders.of(HttpMethod.POST, "").set(HttpHeaderNames.ACCEPT, "application/json"),
+                    HttpData.of(new Gson().toJson(body, JSONRequestBody.class).getBytes())
             );
+
+            AggregatedHttpMessage jsonResponse = httpClient.execute(getJson).aggregate().join();
+
+            jsonObj = new JsonParser().parse(jsonResponse.content().toStringUtf8()).getAsJsonObject();
 
             return jsonObj;
         } catch (Exception e) {
             throw new CallApiCryptoCurrencyRpcException(e.getMessage());
         }
-
-    }*/
+    }
 
     public BigDecimal getBalance() throws CryptoCurrencyRpcException {
         // JsonObject jsonObj = this.callAPIMethod(APICalls.GET_BALANCE, rpcUser, rpcPassword);

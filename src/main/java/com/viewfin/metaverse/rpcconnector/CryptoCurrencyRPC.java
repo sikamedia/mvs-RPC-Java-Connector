@@ -11,7 +11,7 @@ import com.viewfin.metaverse.rpcconnector.exception.CryptoCurrencyRpcExceptionHa
 import com.viewfin.metaverse.rpcconnector.exception.CallApiCryptoCurrencyRpcException;
 import com.viewfin.metaverse.rpcconnector.pojo.Transaction;
 import org.apache.log4j.Logger;
-import org.asynchttpclient.*;
+// import org.asynchttpclient.*;
 
 import java.math.BigDecimal;
 import java.net.URL;
@@ -487,6 +487,7 @@ public class CryptoCurrencyRPC {
     }
 
     // Call API Method Asynchronously
+    /*
     public JsonObject callAPIMethodAsynchronous(APICalls callMethod, Object... params) throws CallApiCryptoCurrencyRpcException {
 
         try {
@@ -535,7 +536,7 @@ public class CryptoCurrencyRPC {
         } catch (Exception e) {
             throw new CallApiCryptoCurrencyRpcException(e.getMessage());
         }
-    }
+    } */
 
     public void setMVSRPCUrl(String http, String rpcHost, String rpcPort) {
         this.baseUrl = (new StringBuilder()).append(http).append("://").append(rpcHost).append(':').append(rpcPort).append("/rpc").toString();
