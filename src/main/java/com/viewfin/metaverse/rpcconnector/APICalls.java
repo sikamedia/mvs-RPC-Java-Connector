@@ -27,6 +27,7 @@ public enum APICalls {
     GET_RECEIVED_BY_ACCOUNT("getreceivedbyaccount"),
     GET_RECEIVED_BY_ADDRESS("getreceivedbyaddress"),
     GET_BALANCE("getbalance"),
+    GET_BALANCE_MVS("fetch-balance"),
     GET_TRANSACTION("gettransaction"),
     GET_CONNECTION_COUNT("getconnectioncount"),
     BACKUP_WALLET("backupwallet"),

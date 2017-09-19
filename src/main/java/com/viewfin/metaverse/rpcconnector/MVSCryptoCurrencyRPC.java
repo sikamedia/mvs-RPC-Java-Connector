@@ -1,10 +1,13 @@
 package com.viewfin.metaverse.rpcconnector;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonObject;
 import com.viewfin.metaverse.rpcconnector.exception.AuthenticationException;
 import com.viewfin.metaverse.rpcconnector.exception.CryptoCurrencyRpcException;
 import com.viewfin.metaverse.rpcconnector.exception.CryptoCurrencyRpcExceptionHandler;
+import com.viewfin.metaverse.rpcconnector.vo.mvs.Balance;
 import com.viewfin.metaverse.rpcconnector.vo.mvs.HeightHeader;
 import org.apache.log4j.Logger;
 
@@ -55,6 +58,25 @@ public class MVSCryptoCurrencyRPC extends CryptoCurrencyRPC {
             LOG.error(e.getMessage());
         }
         return heightHeader;
+    }
+
+    public Balance getBalanceFor(String address) throws CryptoCurrencyRpcException {
+        Balance balance = null;
+        JsonObject jsonObject = this.callAPIMethodAsynchronous(APICalls.GET_BALANCE_MVS, address);
+        cryptoCurrencyRpcExceptionHandler.checkException(jsonObject);
+        ObjectMapper mapper = new ObjectMapper();
+
+        try {
+            balance = mapper.readValue(jsonObject.get("balance").toString(), Balance.class);
+        } catch (IOException e) {
+            LOG.error(e.getMessage());
+        }
+        return balance;
+    }
+
+    public void fetchUTXO(Integer toBeSpent, String paymentAddress) {
+        JsonObject jsonObject = this.callAPIMethodAsynchronous(APICalls.FETCH_HEADER_MVS, toBeSpent, paymentAddress);
+        cryptoCurrencyRpcExceptionHandler.checkException(jsonObject);
     }
 
 }

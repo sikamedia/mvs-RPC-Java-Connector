@@ -56,6 +56,10 @@ public class MetaverseCreateAccountTest {
         Integer height = 547302;
         HeightHeader heightHeader = mvsCryptoCurrencyRPC.getHeightHeader(height);
         assertEquals(height, heightHeader.getNumber());
+    }
+
+    @Test
+    public void testFetchUTXO() {
 
     }
 }
