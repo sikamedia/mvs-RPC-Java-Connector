@@ -1,11 +1,13 @@
 package com.viewfin.metaverse.rpcconnector.vo.mvs;
 
+import java.math.BigInteger;
+
 public class Balance {
 
     private String address;
-    private Integer confirmed;
-    private Integer received;
-    private Integer unspent;
+    private BigInteger confirmed;
+    private BigInteger received;
+    private BigInteger unspent;
 
     public String getAddress() {
         return address;
@@ -15,27 +17,27 @@ public class Balance {
         this.address = address;
     }
 
-    public Integer getConfirmed() {
+    public BigInteger getConfirmed() {
         return confirmed;
     }
 
-    public void setConfirmed(Integer confirmed) {
+    public void setConfirmed(BigInteger confirmed) {
         this.confirmed = confirmed;
     }
 
-    public Integer getReceived() {
+    public BigInteger getReceived() {
         return received;
     }
 
-    public void setReceived(Integer received) {
+    public void setReceived(BigInteger received) {
         this.received = received;
     }
 
-    public Integer getUnspent() {
+    public BigInteger getUnspent() {
         return unspent;
     }
 
-    public void setUnspent(Integer unspent) {
+    public void setUnspent(BigInteger unspent) {
         this.unspent = unspent;
     }
 }

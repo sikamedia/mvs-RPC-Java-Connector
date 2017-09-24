@@ -1,7 +1,5 @@
 package com.viewfin.metaverse.rpcconnector;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonObject;
 import com.viewfin.metaverse.rpcconnector.exception.AuthenticationException;
@@ -9,6 +7,7 @@ import com.viewfin.metaverse.rpcconnector.exception.CryptoCurrencyRpcException;
 import com.viewfin.metaverse.rpcconnector.exception.CryptoCurrencyRpcExceptionHandler;
 import com.viewfin.metaverse.rpcconnector.vo.mvs.Balance;
 import com.viewfin.metaverse.rpcconnector.vo.mvs.HeightHeader;
+import com.viewfin.metaverse.rpcconnector.vo.mvs.Utxo;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -74,9 +73,40 @@ public class MVSCryptoCurrencyRPC extends CryptoCurrencyRPC {
         return balance;
     }
 
-    public void fetchUTXO(Integer toBeSpent, String paymentAddress) {
-        JsonObject jsonObject = this.callAPIMethodAsynchronous(APICalls.FETCH_HEADER_MVS, toBeSpent, paymentAddress);
+    public Utxo fetchUTXO(Integer toBeSpent, String paymentAddress) {
+        Utxo utxo = null;
+        JsonObject jsonObject = this.callAPIMethodAsynchronous(APICalls.FETCH_UTXO_MVS, toBeSpent, paymentAddress);
         cryptoCurrencyRpcExceptionHandler.checkException(jsonObject);
+        ObjectMapper mapper = new ObjectMapper();
+
+        if (jsonObject.has("error")) {
+            LOG.error(jsonObject.get("error").getAsString());
+            return null;
+        }
+
+        if (jsonObject.get("points").isJsonArray()) {
+
+            try {
+                utxo = mapper.readValue(jsonObject.toString(), Utxo.class);
+                return utxo;
+            } catch (IOException e) {
+                LOG.error(e.getMessage());
+            }
+        }
+
+        if (jsonObject.get("points").getAsString().isEmpty()) {
+            utxo = new Utxo();
+            utxo.setPoints(new ArrayList<>());
+            utxo.setChange(0);
+            return utxo;
+        }
+
+        return utxo;
     }
 
+    public void fetchHeight() {
+        JsonObject jsonObject = this.callAPIMethod(APICalls.FETCH_HEIGHT_MVS);
+        LOG.info(jsonObject.toString());
+       // cryptoCurrencyRpcExceptionHandler.checkException(jsonObject);
+    }
 }
