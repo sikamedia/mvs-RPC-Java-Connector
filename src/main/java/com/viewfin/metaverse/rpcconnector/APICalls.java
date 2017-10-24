@@ -40,6 +40,7 @@ public enum APICalls {
     VALIDATE_ADDRESS("validateaddress"),
     ENCRYPT_WALLET("encryptwallet"),
     FETCH_HEADER_MVS("fetch-header"),
+    LIST_ASSETS_MVS("listassets"),
     FETCH_UTXO_MVS("fetch-utxo"),
     FETCH_HEIGHT_MVS("fetch-height"),
     LIST_ADDRESSES("listaddresses");

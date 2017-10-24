@@ -1,6 +1,8 @@
 package com.viewfin.metaverse.rpcconnector;
 
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.viewfin.metaverse.rpcconnector.exception.AuthenticationException;
 import com.viewfin.metaverse.rpcconnector.exception.CryptoCurrencyRpcException;
@@ -8,11 +10,14 @@ import com.viewfin.metaverse.rpcconnector.exception.CryptoCurrencyRpcExceptionHa
 import com.viewfin.metaverse.rpcconnector.vo.mvs.Balance;
 import com.viewfin.metaverse.rpcconnector.vo.mvs.HeightHeader;
 import com.viewfin.metaverse.rpcconnector.vo.mvs.Utxo;
+import com.viewfin.metaverse.rpcconnector.vo.mvs.assets.Asset;
 import org.apache.log4j.Logger;
 
+import java.io.DataInput;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class MVSCryptoCurrencyRPC extends CryptoCurrencyRPC {
@@ -48,7 +53,7 @@ public class MVSCryptoCurrencyRPC extends CryptoCurrencyRPC {
 
     public HeightHeader getHeightHeader(Integer height) throws CryptoCurrencyRpcException {
         HeightHeader heightHeader = null;
-        JsonObject jsonObject = this.callAPIMethodAsynchronous(APICalls.FETCH_HEADER_MVS, "-t", height);
+        JsonObject jsonObject = this.callAPIMethodAsynchronous(APICalls.FETCH_HEADER_MVS, "--height", height);
         cryptoCurrencyRpcExceptionHandler.checkException(jsonObject);
         ObjectMapper mapper = new ObjectMapper();
         try {
@@ -104,8 +109,25 @@ public class MVSCryptoCurrencyRPC extends CryptoCurrencyRPC {
         return utxo;
     }
 
+    public List<Asset> listAssets() {
+        LinkedList<Asset> assetList = new LinkedList();
+        Asset assetTemp;
+        JsonObject jsonObject = this.callAPIMethodAsynchronous(APICalls.LIST_ASSETS_MVS);
+        cryptoCurrencyRpcExceptionHandler.checkException(jsonObject);
+        ObjectMapper mapper = new ObjectMapper();
+        for (JsonElement asset : jsonObject.get("assets").getAsJsonArray()) {
+            try {
+                assetTemp = mapper.readValue(asset.getAsJsonObject().toString(), Asset.class);
+                assetList.add(assetTemp);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return assetList;
+    }
+
     public void fetchHeight() {
-        JsonObject jsonObject = this.callAPIMethod(APICalls.FETCH_HEIGHT_MVS);
+        JsonObject jsonObject = this.callAPIMethodAsynchronous(APICalls.FETCH_HEIGHT_MVS);
         LOG.info(jsonObject.toString());
        // cryptoCurrencyRpcExceptionHandler.checkException(jsonObject);
     }

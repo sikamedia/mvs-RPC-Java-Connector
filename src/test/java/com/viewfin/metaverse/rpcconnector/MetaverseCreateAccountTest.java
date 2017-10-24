@@ -5,10 +5,12 @@ import com.viewfin.metaverse.rpcconnector.utils.ConfigFileReader;
 import com.viewfin.metaverse.rpcconnector.vo.mvs.Balance;
 import com.viewfin.metaverse.rpcconnector.vo.mvs.HeightHeader;
 import com.viewfin.metaverse.rpcconnector.vo.mvs.Utxo;
+import com.viewfin.metaverse.rpcconnector.vo.mvs.assets.Asset;
 import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.nio.charset.Charset;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -55,10 +57,22 @@ public class MetaverseCreateAccountTest {
 
     @Test
     public void testGetHeightHeader() {
-        Integer height = 547302;
+        Integer height = 253243;
         mvsCryptoCurrencyRPC.fetchHeight();
         HeightHeader heightHeader = mvsCryptoCurrencyRPC.getHeightHeader(height);
         assertEquals(height, heightHeader.getNumber());
+    }
+
+    @Test
+    public void testListAssets() {
+        List<Asset> assets =  mvsCryptoCurrencyRPC.listAssets();
+        LOG.info(assets.size());
+        assets.forEach(asset -> {
+            LOG.info(asset.getSymbol());
+            LOG.info(asset.getMaximumSupply());
+            LOG.info(asset.getDescription());
+        });
+
     }
 
     @Test
