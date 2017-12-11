@@ -1,5 +1,6 @@
 package com.viewfin.metaverse.rpcconnector;
 
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.gargoylesoftware.htmlunit.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -15,8 +16,10 @@ import com.viewfin.metaverse.rpcconnector.exception.CallApiCryptoCurrencyRpcExce
 import com.viewfin.metaverse.rpcconnector.exception.CryptoCurrencyRpcException;
 import com.viewfin.metaverse.rpcconnector.exception.CryptoCurrencyRpcExceptionHandler;
 import com.viewfin.metaverse.rpcconnector.pojo.Transaction;
+import com.viewfin.metaverse.rpcconnector.utils.JSONUtils;
 import org.apache.log4j.Logger;
 
+import javax.json.Json;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.util.Arrays;
@@ -26,7 +29,7 @@ import java.util.List;
 
 public class CryptoCurrencyRPC {
 
-    public static final Logger LOG = Logger.getLogger("rpcLogger");
+    public static final Logger LOG = Logger.getLogger(CryptoCurrencyRPC.class.getName());
 
     private WebClient client;
     private String baseUrl;
@@ -508,10 +511,21 @@ public class CryptoCurrencyRPC {
 
             AggregatedHttpMessage jsonResponse = httpClient.execute(getJson).aggregate().join();
 
-            jsonObj = new JsonParser().parse(jsonResponse.content().toStringUtf8()).getAsJsonObject();
+            //jsonObj = new JsonParser().parse(jsonResponse.content().toStringUtf8()).getAsJsonObject();
+            LOG.info(jsonResponse.content().toStringUtf8());
+            if (!JSONUtils.isJSONValid(jsonResponse.content().toStringUtf8())) {
+                jsonObj = gson.fromJson(jsonResponse.content().toStringUtf8(), JsonObject.class);
+            } else {
+                String jsonString = Json.createObjectBuilder()
+                        .add("result", jsonResponse.content().toStringUtf8())
+                        .build()
+                        .toString();
+                jsonObj = gson.fromJson(jsonString, JsonObject.class);
 
+            }
             return jsonObj;
         } catch (Exception e) {
+            LOG.error(e.getMessage());
             throw new CallApiCryptoCurrencyRpcException(e.getMessage());
         }
     }

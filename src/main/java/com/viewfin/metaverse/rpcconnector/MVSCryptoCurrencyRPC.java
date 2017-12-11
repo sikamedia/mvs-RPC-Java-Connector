@@ -102,7 +102,7 @@ public class MVSCryptoCurrencyRPC extends CryptoCurrencyRPC {
         if (jsonObject.get("points").getAsString().isEmpty()) {
             utxo = new Utxo();
             utxo.setPoints(new ArrayList<>());
-            utxo.setChange(0);
+            utxo.setChange(0L);
             return utxo;
         }
 

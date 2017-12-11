@@ -27,7 +27,7 @@ class point {
 public class Utxo {
 
     private List<point> points;
-    private Integer change;
+    private Long change;
 
 
     public List<point> getPoints() {
@@ -38,11 +38,11 @@ public class Utxo {
         this.points = points;
     }
 
-    public Integer getChange() {
+    public Long getChange() {
         return change;
     }
 
-    public void setChange(Integer change) {
+    public void setChange(Long change) {
         this.change = change;
     }
 }

@@ -43,7 +43,7 @@ public class MetaverseCreateAccountTest {
         LOG.info(mvsCryptoCurrencyRPC.getPathToBaseUrl());
         double balance = mvsCryptoCurrencyRPC.getBalance().doubleValue();
 
-        LOG.info(balance);
+        LOG.info(String.format("%.8f", balance / 100000000));
         assertEquals(1, 1);
     }
 
