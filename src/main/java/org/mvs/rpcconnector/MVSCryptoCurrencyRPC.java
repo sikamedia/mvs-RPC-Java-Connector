@@ -53,7 +53,7 @@ public class MVSCryptoCurrencyRPC extends CryptoCurrencyRPC {
 
     public HeightHeader getHeightHeader(Integer height) throws CryptoCurrencyRpcException {
         HeightHeader heightHeader = null;
-        JsonObject jsonObject = this.callAPIMethodAsynchronous(APICalls.FETCH_HEADER_MVS, "--height", height);
+        JsonObject jsonObject = this.callAPIMethodAsynchronous(APICalls.FETCH_HEADER_MVS, "-t", height.toString());
         cryptoCurrencyRpcExceptionHandler.checkException(jsonObject);
         ObjectMapper mapper = new ObjectMapper();
         try {

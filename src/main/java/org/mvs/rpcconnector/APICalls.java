@@ -42,7 +42,7 @@ public enum APICalls {
     FETCH_HEADER_MVS("fetch-header"),
     LIST_ASSETS_MVS("listassets"),
     FETCH_UTXO_MVS("fetch-utxo"),
-    FETCH_HEIGHT_MVS("fetch-height"),
+    FETCH_HEIGHT_MVS("getheight"),
     LIST_ADDRESSES("listaddresses");
 
     private String value;
