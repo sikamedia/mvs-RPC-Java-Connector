@@ -1,8 +1,8 @@
-package com.viewfin.metaverse.rpcconnector.utils;
+package org.mvs.rpcconnector.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import com.viewfin.metaverse.rpcconnector.vo.ServerConfig;
+import org.mvs.rpcconnector.vo.ServerConfig;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.apache.log4j.Logger;

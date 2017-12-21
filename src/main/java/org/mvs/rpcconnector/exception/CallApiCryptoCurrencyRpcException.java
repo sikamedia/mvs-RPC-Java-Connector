@@ -1,4 +1,4 @@
-package com.viewfin.metaverse.rpcconnector.exception;
+package org.mvs.rpcconnector.exception;
 
 /**
  * Created by d.romantsov on 26.05.2015.

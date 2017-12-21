@@ -1,4 +1,4 @@
-package com.viewfin.metaverse.rpcconnector.events;
+package org.mvs.rpcconnector.events;
 
 import org.apache.log4j.Logger;
 

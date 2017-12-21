@@ -1,4 +1,4 @@
-package com.viewfin.metaverse.rpcconnector.vo.mvs;
+package org.mvs.rpcconnector.vo.mvs;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

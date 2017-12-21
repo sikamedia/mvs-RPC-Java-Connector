@@ -1,8 +1,7 @@
-package com.viewfin.metaverse.rpcconnector.utils;
+package org.mvs.rpcconnector.utils;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonParser;
-import com.google.gson.JsonSyntaxException;
 import org.apache.log4j.Logger;
 
 

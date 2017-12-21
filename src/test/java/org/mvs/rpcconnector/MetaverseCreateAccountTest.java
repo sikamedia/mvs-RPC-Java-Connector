@@ -1,16 +1,16 @@
-package com.viewfin.metaverse.rpcconnector;
+package org.mvs.rpcconnector;
 
-import com.viewfin.metaverse.rpcconnector.exception.AuthenticationException;
-import com.viewfin.metaverse.rpcconnector.utils.ConfigFileReader;
-import com.viewfin.metaverse.rpcconnector.vo.mvs.Balance;
-import com.viewfin.metaverse.rpcconnector.vo.mvs.HeightHeader;
-import com.viewfin.metaverse.rpcconnector.vo.mvs.Utxo;
-import com.viewfin.metaverse.rpcconnector.vo.mvs.assets.Asset;
+import org.mvs.rpcconnector.exception.AuthenticationException;
+import org.mvs.rpcconnector.utils.ConfigFileReader;
+import org.mvs.rpcconnector.vo.mvs.Balance;
+import org.mvs.rpcconnector.vo.mvs.HeightHeader;
+import org.mvs.rpcconnector.vo.mvs.Utxo;
+import org.mvs.rpcconnector.vo.mvs.assets.Asset;
 import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
+import org.mvs.rpcconnector.vo.mvs.blocks.Height;
 
-import java.nio.charset.Charset;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -27,7 +27,7 @@ public class MetaverseCreateAccountTest {
         LOG.info(System.getProperty("user.dir"));
         System.out.println(System.getProperty("user.dir"));
         String configFilePath = System.getProperty("user.dir") +
-                "/src/test/java/com/viewfin/metaverse/rpcconnector/config.yaml";
+                "/src/test/java/org/mvs/rpcconnector/config.yaml";
         ConfigFileReader configFileReader = new ConfigFileReader(configFilePath);
         final String rpcUser = configFileReader.getUsername();
         final String rpcPassword = configFileReader.getPassword();
@@ -56,11 +56,10 @@ public class MetaverseCreateAccountTest {
     }
 
     @Test
-    public void testGetHeightHeader() {
-        Integer height = 253243;
-        mvsCryptoCurrencyRPC.fetchHeight();
-        HeightHeader heightHeader = mvsCryptoCurrencyRPC.getHeightHeader(height);
-        assertEquals(height, heightHeader.getNumber());
+    public void testGetHeightHeaderAndGetHeight() {
+        Height height = mvsCryptoCurrencyRPC.fetchHeight();
+        HeightHeader heightHeader = mvsCryptoCurrencyRPC.getHeightHeader(height.getHeight().intValue());
+        assertEquals(height.getHeight().intValue(), heightHeader.getNumber().intValue());
     }
 
     @Test

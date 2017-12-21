@@ -1,6 +1,5 @@
-package com.viewfin.metaverse.rpcconnector;
+package org.mvs.rpcconnector;
 
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.gargoylesoftware.htmlunit.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -11,12 +10,12 @@ import com.linecorp.armeria.common.AggregatedHttpMessage;
 import com.linecorp.armeria.common.HttpData;
 import com.linecorp.armeria.common.HttpHeaderNames;
 import com.linecorp.armeria.common.HttpHeaders;
-import com.viewfin.metaverse.rpcconnector.exception.AuthenticationException;
-import com.viewfin.metaverse.rpcconnector.exception.CallApiCryptoCurrencyRpcException;
-import com.viewfin.metaverse.rpcconnector.exception.CryptoCurrencyRpcException;
-import com.viewfin.metaverse.rpcconnector.exception.CryptoCurrencyRpcExceptionHandler;
-import com.viewfin.metaverse.rpcconnector.pojo.Transaction;
-import com.viewfin.metaverse.rpcconnector.utils.JSONUtils;
+import org.mvs.rpcconnector.exception.AuthenticationException;
+import org.mvs.rpcconnector.exception.CallApiCryptoCurrencyRpcException;
+import org.mvs.rpcconnector.exception.CryptoCurrencyRpcException;
+import org.mvs.rpcconnector.exception.CryptoCurrencyRpcExceptionHandler;
+import org.mvs.rpcconnector.pojo.Transaction;
+import org.mvs.rpcconnector.utils.JSONUtils;
 import org.apache.log4j.Logger;
 
 import javax.json.Json;

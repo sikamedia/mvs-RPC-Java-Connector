@@ -1,19 +1,18 @@
-package com.viewfin.metaverse.rpcconnector;
+package org.mvs.rpcconnector;
 
-import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.viewfin.metaverse.rpcconnector.exception.AuthenticationException;
-import com.viewfin.metaverse.rpcconnector.exception.CryptoCurrencyRpcException;
-import com.viewfin.metaverse.rpcconnector.exception.CryptoCurrencyRpcExceptionHandler;
-import com.viewfin.metaverse.rpcconnector.vo.mvs.Balance;
-import com.viewfin.metaverse.rpcconnector.vo.mvs.HeightHeader;
-import com.viewfin.metaverse.rpcconnector.vo.mvs.Utxo;
-import com.viewfin.metaverse.rpcconnector.vo.mvs.assets.Asset;
+import org.mvs.rpcconnector.exception.AuthenticationException;
+import org.mvs.rpcconnector.exception.CryptoCurrencyRpcException;
+import org.mvs.rpcconnector.exception.CryptoCurrencyRpcExceptionHandler;
+import org.mvs.rpcconnector.vo.mvs.Balance;
+import org.mvs.rpcconnector.vo.mvs.HeightHeader;
+import org.mvs.rpcconnector.vo.mvs.Utxo;
+import org.mvs.rpcconnector.vo.mvs.assets.Asset;
 import org.apache.log4j.Logger;
+import org.mvs.rpcconnector.vo.mvs.blocks.Height;
 
-import java.io.DataInput;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -126,9 +125,16 @@ public class MVSCryptoCurrencyRPC extends CryptoCurrencyRPC {
         return assetList;
     }
 
-    public void fetchHeight() {
+    public Height fetchHeight() {
         JsonObject jsonObject = this.callAPIMethodAsynchronous(APICalls.FETCH_HEIGHT_MVS);
-        LOG.info(jsonObject.toString());
-       // cryptoCurrencyRpcExceptionHandler.checkException(jsonObject);
+        cryptoCurrencyRpcExceptionHandler.checkException(jsonObject);
+        ObjectMapper mapper = new ObjectMapper();
+        Height height = null;
+        try {
+            height = mapper.readValue(jsonObject.toString(), Height.class);
+        } catch (IOException e) {
+            LOG.error(e.getMessage());
+        }
+        return height;
     }
 }

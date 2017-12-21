@@ -1,4 +1,4 @@
-package com.viewfin.metaverse.rpcconnector.vo;
+package org.mvs.rpcconnector.vo;
 
 import java.util.Map;
 

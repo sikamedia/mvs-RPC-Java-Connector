@@ -1,4 +1,4 @@
-package com.viewfin.metaverse.rpcconnector.vo.mvs.blocks;
+package org.mvs.rpcconnector.vo.mvs.blocks;
 
 import java.math.BigInteger;
 

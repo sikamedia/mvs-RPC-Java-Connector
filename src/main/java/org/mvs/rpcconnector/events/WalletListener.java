@@ -1,8 +1,8 @@
-package com.viewfin.metaverse.rpcconnector.events;
+package org.mvs.rpcconnector.events;
 
-import com.viewfin.metaverse.rpcconnector.CryptoCurrencyRPC;
-import com.viewfin.metaverse.rpcconnector.exception.CryptoCurrencyRpcException;
-import com.viewfin.metaverse.rpcconnector.pojo.Transaction;
+import org.mvs.rpcconnector.CryptoCurrencyRPC;
+import org.mvs.rpcconnector.exception.CryptoCurrencyRpcException;
+import org.mvs.rpcconnector.pojo.Transaction;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
